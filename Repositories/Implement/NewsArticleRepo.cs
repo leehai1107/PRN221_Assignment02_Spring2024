@@ -159,7 +159,22 @@ namespace Repositories.Implement
         {
             using (FunewsManagementDbContext _context = new())
             {
-                return await _context.NewsArticles.FindAsync(id);
+                return await _context.NewsArticles.Include(x => x.Tags)
+                    .Include(z => z.Category)
+                    .Include(y => y.CreatedBy).FirstOrDefaultAsync(x => x.NewsArticleId == id);
+            }
+        }
+
+        public async Task<List<NewsArticle>> GetNewsArticlesActiveAsync()
+        {
+            using (FunewsManagementDbContext _context = new())
+            {
+                return await _context.NewsArticles
+                    .Include(x => x.Tags)
+                    .Include(z => z.Category)
+                    .Include(y => y.CreatedBy)
+                    .Where(x => x.NewsStatus == true)
+                    .ToListAsync();
             }
         }
     }

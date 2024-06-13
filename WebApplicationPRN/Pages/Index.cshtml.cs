@@ -17,7 +17,7 @@ namespace WebApplicationPRN.Pages
 
         public async Task OnGetAsync()
         {
-            NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
+            NewsArticle = await _newsArticleSvc.GetNewsArticlesActiveAsync();
         }
     }
 }

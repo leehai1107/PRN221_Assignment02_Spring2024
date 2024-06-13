@@ -82,6 +82,8 @@ namespace WebApplicationPRN.Pages.NewsArticles
                     tags.Add(tag);
                 }
 
+                NewsArticle.ModifiedDate = DateTime.Now;
+
                 await _newsArticleSvc.UpdateNewsArticleAsync(NewsArticle, tags);
             }
             catch (DbUpdateConcurrencyException)

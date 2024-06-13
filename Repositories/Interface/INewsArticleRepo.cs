@@ -5,6 +5,7 @@ namespace Repositories.Interface
     public interface INewsArticleRepo
     {
         Task<List<NewsArticle>> GetNewsArticlesAsync();
+        Task<List<NewsArticle>> GetNewsArticlesActiveAsync();
         Task<List<NewsArticle>> GetNewsArticlesByAccountIdAsync(short accountId);
         Task<List<NewsArticle>> GetNewsArticlesByPeriodAsync(DateTime startDate, DateTime endDate);
         Task<List<NewsArticle>> SearchNewsArticlesByTitleAsync(string title);

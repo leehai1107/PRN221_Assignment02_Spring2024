@@ -58,6 +58,10 @@ namespace WebApplicationPRN.Pages.NewsArticles
                 tags.Add(tag);
             }
 
+            NewsArticle.CreatedDate = DateTime.Now;
+
+            NewsArticle.ModifiedDate = DateTime.Now;
+
             await _newsArticleSvc.AddNewsArticleAsync(NewsArticle, tags);
 
             return (RedirectToPage("./Index"));

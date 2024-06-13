@@ -51,5 +51,10 @@ namespace Services.Implement
         {
             return await _newsArticleRepo.GetNewsArticleByIdAsync(id);
         }
+
+        public async Task<List<NewsArticle>> GetNewsArticlesActiveAsync()
+        {
+            return await _newsArticleRepo.GetNewsArticlesActiveAsync();
+        }
     }
 }

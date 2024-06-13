@@ -12,6 +12,7 @@ namespace Services.Interface
         Task<List<NewsArticle>> GetNewsArticlesByPeriodAsync(DateTime startDate, DateTime endDate);
         Task<List<NewsArticle>> SearchNewsArticlesByTitleAsync(string title);
         Task<NewsArticle> GetNewsArticleByIdAsync(string id);
+        Task<List<NewsArticle>> GetNewsArticlesActiveAsync();
 
     }
 }

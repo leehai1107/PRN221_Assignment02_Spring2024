@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="NewsArticle.CreatedDate" class="control-label"></label>
-                <input asp-for="NewsArticle.CreatedDate" class="form-control" />
+                <input asp-for="NewsArticle.CreatedDate" class="form-control" disabled />
                 <span asp-validation-for="NewsArticle.CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,8 +36,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="NewsArticle.NewsStatus" class="control-label"></label>
-                <input asp-for="NewsArticle.NewsStatus" class="form-control" />
-                <span asp-validation-for="NewsArticle.NewsStatus" class="text-danger"></span>
+                <select asp-for="NewsArticle.NewsStatus" class="form-control">
+                    <option value="true" selected>True</option>
+                    <option value="false">False</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="NewsArticle.CreatedBy" class="control-label"></label>
@@ -46,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="NewsArticle.ModifiedDate" class="control-label"></label>
-                <input asp-for="NewsArticle.ModifiedDate" class="form-control" />
+                <input asp-for="NewsArticle.ModifiedDate" class="form-control" disabled />
                 <span asp-validation-for="NewsArticle.ModifiedDate" class="text-danger"></span>
             </div>
             <div class="form-group">

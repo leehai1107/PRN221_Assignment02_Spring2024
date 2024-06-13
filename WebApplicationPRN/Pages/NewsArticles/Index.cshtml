@@ -41,40 +41,42 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.NewsArticle) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NewsTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NewsContent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NewsStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy.AccountName)
-            </td>
-            <td>
-               @foreach (var tag in item.Tags){
-                   @Html.DisplayFor(modelItem => tag.TagName) <br />
-               }
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.NewsArticleId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.NewsArticleId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.NewsArticleId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.NewsArticle)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsContent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy.AccountName)
+                </td>
+                <td>
+                    @foreach (var tag in item.Tags)
+                    {
+                        @Html.DisplayFor(modelItem => tag.TagName) <br />
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.NewsArticleId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.NewsArticleId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.NewsArticleId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
