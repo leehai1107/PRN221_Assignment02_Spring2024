@@ -12,5 +12,6 @@ namespace Services.Interface
         Task RemoveSystemAccountAsync(short id);
         Task UpdateSystemAccountAsync(SystemAccount newAccount);
         Task<bool> ValidateAsync(string email, string password);
+        public bool SignUpWithAdminAccount(string email);
     }
 }

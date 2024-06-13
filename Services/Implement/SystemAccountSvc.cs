@@ -20,7 +20,7 @@ namespace Services.Implement
             adminPassword = section["Password"];
         }
 
-        private bool SignUpWithAdminAccount(string email)
+        public bool SignUpWithAdminAccount(string email)
         {
             if (email == adminEmail)
             {

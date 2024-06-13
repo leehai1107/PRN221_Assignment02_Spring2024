@@ -22,7 +22,13 @@ namespace LeChiHaiRazorPages.Pages
         {
             if (await _systemAccountSvc.ValidateAsync(Email, Password))
             {
+                var systemAccount = await _systemAccountSvc.GetAccountByEmailAsync(Email);
+
                 HttpContext.Session.SetString("Email", Email);
+                if (!_systemAccountSvc.SignUpWithAdminAccount(Email))
+                {
+                    HttpContext.Session.SetString("AccountId", systemAccount.AccountId.ToString());
+                }
 
                 // Redirect to the home page or dashboard
                 return RedirectToPage("/Index");

@@ -23,6 +23,10 @@ namespace WebApplicationPRN.Pages.SystemAccounts
             {
                 Response.Redirect("/Login");
             }
+            if (HttpContext.Session.GetString("AccountId") != null)
+            {
+                Response.Redirect("/Index");
+            }
         }
     }
 }

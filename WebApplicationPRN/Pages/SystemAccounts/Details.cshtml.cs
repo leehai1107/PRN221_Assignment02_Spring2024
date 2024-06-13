@@ -23,8 +23,30 @@ namespace WebApplicationPRN.Pages.SystemAccounts
                 return RedirectToPage("/Index");
 
             }
+            // Check is admin or not
+            if (HttpContext.Session.GetString("AccountId") == null)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var systemaccount = await _systemAccountSvc.GetSystemAccountByIdAsync((short)id);
+                if (systemaccount == null)
+                {
+                    return NotFound();
+                }
+                SystemAccount = systemaccount;
+                return Page();
+            }
+            // If not admin
             else
             {
+                if (HttpContext.Session.GetString("AccountId").ToString() != id.ToString())
+                {
+                    return RedirectToPage("/Index");
+                }
+
                 if (id == null)
                 {
                     return NotFound();

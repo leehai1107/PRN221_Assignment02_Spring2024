@@ -25,7 +25,9 @@ namespace WebApplicationPRN.Pages.SystemAccounts
                 return RedirectToPage("/Index");
 
             }
-            else
+
+            // Check is admin or not
+            if (HttpContext.Session.GetString("AccountId") == null)
             {
                 if (id == null)
                 {
@@ -40,7 +42,29 @@ namespace WebApplicationPRN.Pages.SystemAccounts
                 SystemAccount = systemaccount;
                 return Page();
             }
+            // If not admin
+            else
+            {
+                if (HttpContext.Session.GetString("AccountId").ToString() != id.ToString())
+                {
+                    return RedirectToPage("/Index");
+                }
 
+                // Check not user can edit another with above check
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var systemaccount = await _systemAccountSvc.GetSystemAccountByIdAsync((short)id);
+                if (systemaccount == null)
+                {
+                    return NotFound();
+                }
+                SystemAccount = systemaccount;
+                return Page();
+
+            }
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
