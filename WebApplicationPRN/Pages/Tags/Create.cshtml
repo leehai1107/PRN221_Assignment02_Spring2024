@@ -1,0 +1,44 @@
+﻿@page
+@model WebApplicationPRN.Pages.Tags.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tag</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tag.TagId" class="control-label"></label>
+                <input asp-for="Tag.TagId" class="form-control" />
+                <span asp-validation-for="Tag.TagId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag.TagName" class="control-label"></label>
+                <input asp-for="Tag.TagName" class="form-control" />
+                <span asp-validation-for="Tag.TagName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag.Note" class="control-label"></label>
+                <input asp-for="Tag.Note" class="form-control" />
+                <span asp-validation-for="Tag.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
