@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Interface;
-using System.Diagnostics;
 
 namespace WebApplicationPRN.Pages.NewsArticles
 {
@@ -40,9 +39,9 @@ namespace WebApplicationPRN.Pages.NewsArticles
         }
         [BindProperty]
         public NewsArticle NewsArticle { get; set; } = default!;
-        [BindProperty]
-        public List<Tag> Tags { get; set; } = new List<Tag>();
 
+        [BindProperty]
+        public int[] TagsIdSelected { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -51,8 +50,15 @@ namespace WebApplicationPRN.Pages.NewsArticles
             {
                 return Page();
             }
-            Debug.WriteLine(NewsArticle.Tags.Count);
-            await _newsArticleSvc.AddNewsArticleAsync(NewsArticle, Tags);
+            List<Tag> tags = new List<Tag>();
+
+            foreach (var tagId in TagsIdSelected)
+            {
+                var tag = await _tagSvc.GetTagByIdAsync(tagId);
+                tags.Add(tag);
+            }
+
+            await _newsArticleSvc.AddNewsArticleAsync(NewsArticle, tags);
 
             return (RedirectToPage("./Index"));
         }

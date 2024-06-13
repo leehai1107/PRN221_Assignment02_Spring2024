@@ -1,17 +1,17 @@
 ﻿using BusinessObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using Services.Interface;
 
 namespace WebApplicationPRN.Pages.NewsArticles
 {
     public class DetailsModel : PageModel
     {
-        private readonly DataAccessLayer.FunewsManagementDbContext _context;
+        private readonly INewsArticleSvc _newsArticleSvc;
 
-        public DetailsModel(DataAccessLayer.FunewsManagementDbContext context)
+        public DetailsModel(INewsArticleSvc newsArticleSvc)
         {
-            _context = context;
+            _newsArticleSvc = newsArticleSvc;
         }
 
         public NewsArticle NewsArticle { get; set; } = default!;
@@ -30,7 +30,7 @@ namespace WebApplicationPRN.Pages.NewsArticles
                     return NotFound();
                 }
 
-                var newsarticle = await _context.NewsArticles.Include(x => x.Category).Include(x => x.CreatedBy).FirstOrDefaultAsync(m => m.NewsArticleId == id);
+                var newsarticle = await _newsArticleSvc.GetNewsArticleByIdAsync(id);
                 if (newsarticle == null)
                 {
                     return NotFound();

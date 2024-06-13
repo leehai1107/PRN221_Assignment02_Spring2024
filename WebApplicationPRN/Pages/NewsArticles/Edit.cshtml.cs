@@ -25,6 +25,9 @@ namespace WebApplicationPRN.Pages.NewsArticles
         [BindProperty]
         public NewsArticle NewsArticle { get; set; } = default!;
 
+        [BindProperty]
+        public int[] TagsIdSelected { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (HttpContext.Session.GetString("Email") == null)
@@ -70,7 +73,16 @@ namespace WebApplicationPRN.Pages.NewsArticles
 
             try
             {
-                await _newsArticleSvc.UpdateNewsArticleAsync(NewsArticle, NewsArticle.Tags.ToList());// ?? update tags
+
+                List<Tag> tags = new List<Tag>();
+
+                foreach (var tagId in TagsIdSelected)
+                {
+                    var tag = await _tagSvc.GetTagByIdAsync(tagId);
+                    tags.Add(tag);
+                }
+
+                await _newsArticleSvc.UpdateNewsArticleAsync(NewsArticle, tags);
             }
             catch (DbUpdateConcurrencyException)
             {
