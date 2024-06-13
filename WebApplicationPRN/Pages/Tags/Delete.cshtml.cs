@@ -19,22 +19,31 @@ namespace WebApplicationPRN.Pages.Tags
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetString("Email") == null)
             {
-                return NotFound();
-            }
+                return RedirectToPage("/Index");
 
-            var tag = await _tagSvc.GetTagByIdAsync((int)id);
-
-            if (tag == null)
-            {
-                return NotFound();
             }
             else
             {
-                Tag = tag;
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var tag = await _tagSvc.GetTagByIdAsync((int)id);
+
+                if (tag == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    Tag = tag;
+                }
+                return Page();
             }
-            return Page();
+
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)

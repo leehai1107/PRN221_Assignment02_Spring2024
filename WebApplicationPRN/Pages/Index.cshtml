@@ -4,7 +4,61 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].NewsTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].NewsContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].ModifiedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsArticle[0].Tags)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.NewsArticle)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsContent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy.AccountName)
+                </td>
+                <td>
+                    @foreach (var tag in item.Tags)
+                    {
+                        @Html.DisplayFor(modelItem => tag.TagName) <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

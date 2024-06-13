@@ -24,11 +24,19 @@ namespace WebApplicationPRN.Pages.NewsArticles
 
         public async Task<IActionResult> OnGet()
         {
-            ViewData["Tags"] = new MultiSelectList(await _tagSvc.GetTagsAsync(), "TagId", "TagName");
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                return RedirectToPage("/Index");
 
-            ViewData["CategoryId"] = new SelectList(await _categorySvc.GetCategoriesAsync(), "CategoryId", "CategoryName");
-            ViewData["CreatedById"] = new SelectList(await _systemAccountSvc.GetAccountsAsync(), "AccountId", "AccountName");
-            return Page();
+            }
+            else
+            {
+                ViewData["Tags"] = new MultiSelectList(await _tagSvc.GetTagsAsync(), "TagId", "TagName");
+
+                ViewData["CategoryId"] = new SelectList(await _categorySvc.GetCategoriesAsync(), "CategoryId", "CategoryName");
+                ViewData["CreatedById"] = new SelectList(await _systemAccountSvc.GetAccountsAsync(), "AccountId", "AccountName");
+                return Page();
+            }
         }
         [BindProperty]
         public NewsArticle NewsArticle { get; set; } = default!;

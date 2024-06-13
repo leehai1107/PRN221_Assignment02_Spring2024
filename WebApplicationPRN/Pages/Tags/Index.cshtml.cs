@@ -18,6 +18,10 @@ namespace WebApplicationPRN.Pages.Tags
         public async Task OnGetAsync()
         {
             Tag = await _tagSvc.GetTagsAsync();
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                Response.Redirect("/Login");
+            }
         }
     }
 }

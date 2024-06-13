@@ -19,6 +19,10 @@ namespace WebApplicationPRN.Pages.SystemAccounts
         public async Task OnGetAsync()
         {
             SystemAccount = await _systemAccountSvc.GetAccountsAsync();
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                Response.Redirect("/Login");
+            }
         }
     }
 }

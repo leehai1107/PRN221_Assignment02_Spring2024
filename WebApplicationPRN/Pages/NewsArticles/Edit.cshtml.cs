@@ -27,28 +27,36 @@ namespace WebApplicationPRN.Pages.NewsArticles
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetString("Email") == null)
             {
-                return NotFound();
+                return RedirectToPage("/Index");
+
             }
-
-            var newsarticle = await _newsArticleSvc.GetNewsArticleByIdAsync(id);
-
-            if (newsarticle == null)
+            else
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var newsarticle = await _newsArticleSvc.GetNewsArticleByIdAsync(id);
+
+                if (newsarticle == null)
+                {
+                    return NotFound();
+                }
+                NewsArticle = newsarticle;
+
+                // Retrieve all available tags
+                ViewData["Tags"] = new MultiSelectList(await _tagSvc.GetTagsAsync(), "TagId", "TagName");
+
+                // Set selected tags
+                ViewData["SelectedTags"] = NewsArticle.Tags.ToList();
+
+                ViewData["CategoryId"] = new SelectList(await _categorySvc.GetCategoriesAsync(), "CategoryId", "CategoryName");
+                ViewData["CreatedById"] = new SelectList(await _systemAccountSvc.GetAccountsAsync(), "AccountId", "AccountName");
+                return Page();
             }
-            NewsArticle = newsarticle;
-
-            // Retrieve all available tags
-            ViewData["Tags"] = new MultiSelectList(await _tagSvc.GetTagsAsync(), "TagId", "TagName");
-
-            // Set selected tags
-            ViewData["SelectedTags"] = NewsArticle.Tags.ToList();
-
-            ViewData["CategoryId"] = new SelectList(await _categorySvc.GetCategoriesAsync(), "CategoryId", "CategoryName");
-            ViewData["CreatedById"] = new SelectList(await _systemAccountSvc.GetAccountsAsync(), "AccountId", "AccountName");
-            return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.

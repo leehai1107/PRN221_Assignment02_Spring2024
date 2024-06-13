@@ -19,6 +19,12 @@ namespace WebApplicationPRN.Pages.Categories
         public async Task OnGetAsync()
         {
             Category = await _categorySvc.GetCategoriesAsync();
+
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                Response.Redirect("/Login");
+            }
+
         }
     }
 }

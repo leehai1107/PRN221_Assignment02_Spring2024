@@ -1,20 +1,23 @@
-using Microsoft.AspNetCore.Mvc;
+using BusinessObjects;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Services.Interface;
 
 namespace WebApplicationPRN.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly INewsArticleSvc _newsArticleSvc;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(INewsArticleSvc newsArticleSvc)
         {
-            _logger = logger;
+            _newsArticleSvc = newsArticleSvc;
         }
 
-        public void OnGet()
-        {
+        public IList<NewsArticle> NewsArticle { get; set; } = default!;
 
+        public async Task OnGetAsync()
+        {
+            NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
         }
     }
 }

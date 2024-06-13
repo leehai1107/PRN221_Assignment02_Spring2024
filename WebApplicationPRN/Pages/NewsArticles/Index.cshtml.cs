@@ -18,6 +18,10 @@ namespace WebApplicationPRN.Pages.NewsArticles
         public async Task OnGetAsync()
         {
             NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                Response.Redirect("/Login");
+            }
         }
     }
 }

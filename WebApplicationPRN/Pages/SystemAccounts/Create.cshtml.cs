@@ -16,7 +16,15 @@ namespace WebApplicationPRN.Pages.SystemAccounts
 
         public IActionResult OnGet()
         {
-            return Page();
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                return RedirectToPage("/Index");
+
+            }
+            else
+            {
+                return Page();
+            }
         }
 
         [BindProperty]

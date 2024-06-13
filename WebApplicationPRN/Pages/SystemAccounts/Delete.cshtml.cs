@@ -19,22 +19,31 @@ namespace WebApplicationPRN.Pages.SystemAccounts
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetString("Email") == null)
             {
-                return NotFound();
-            }
+                return RedirectToPage("/Index");
 
-            var systemaccount = await _systemAccountSvc.GetSystemAccountByIdAsync((short)id);
-
-            if (systemaccount == null)
-            {
-                return NotFound();
             }
             else
             {
-                SystemAccount = systemaccount;
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var systemaccount = await _systemAccountSvc.GetSystemAccountByIdAsync((short)id);
+
+                if (systemaccount == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    SystemAccount = systemaccount;
+                }
+                return Page();
             }
-            return Page();
+
         }
 
         public async Task<IActionResult> OnPostAsync(short? id)

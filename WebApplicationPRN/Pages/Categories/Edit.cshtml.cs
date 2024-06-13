@@ -20,18 +20,28 @@ namespace WebApplicationPRN.Pages.Categories
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetString("Email") == null)
             {
-                return NotFound();
-            }
+                return RedirectToPage("/Index");
 
-            var category = await _categorySvc.GetCategoryByIdAsync((short)id);
-            if (category == null)
-            {
-                return NotFound();
             }
-            Category = category;
-            return Page();
+            else
+            {
+
+
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var category = await _categorySvc.GetCategoryByIdAsync((short)id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                Category = category;
+                return Page();
+            }
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.

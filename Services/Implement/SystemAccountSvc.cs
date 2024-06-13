@@ -9,6 +9,7 @@ namespace Services.Implement
     {
         private readonly ISystemAccountRepo _systemAccountRepo;
         private string adminEmail;
+        private string adminPassword;
 
         private void GetAdminAccount()
         {
@@ -16,6 +17,7 @@ namespace Services.Implement
             IConfigurationSection section = config.GetSection("AdminAccount");
 
             adminEmail = section["Email"];
+            adminPassword = section["Password"];
         }
 
         private bool SignUpWithAdminAccount(string email)
@@ -85,6 +87,20 @@ namespace Services.Implement
         {
             try
             {
+                GetAdminAccount();
+                if (SignUpWithAdminAccount(email))
+                {
+                    if (password == adminPassword)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+
                 var account = await _systemAccountRepo.GetAccountByEmailAsync(email);
                 if (account == null)
                 {

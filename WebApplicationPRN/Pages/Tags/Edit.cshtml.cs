@@ -21,18 +21,27 @@ namespace WebApplicationPRN.Pages.Tags
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetString("Email") == null)
             {
-                return NotFound();
+                return RedirectToPage("/Index");
+
+            }
+            else
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var tag = await _tagSvc.GetTagByIdAsync((int)id);
+                if (tag == null)
+                {
+                    return NotFound();
+                }
+                Tag = tag;
+                return Page();
             }
 
-            var tag = await _tagSvc.GetTagByIdAsync((int)id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-            Tag = tag;
-            return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.

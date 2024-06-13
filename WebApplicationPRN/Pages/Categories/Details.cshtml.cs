@@ -18,21 +18,30 @@ namespace WebApplicationPRN.Pages.Categories
 
         public async Task<IActionResult> OnGetAsync(short? id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetString("Email") == null)
             {
-                return NotFound();
-            }
+                return RedirectToPage("/Index");
 
-            var category = await _categorySvc.GetCategoryByIdAsync((short)id);
-            if (category == null)
-            {
-                return NotFound();
             }
             else
             {
-                Category = category;
+
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var category = await _categorySvc.GetCategoryByIdAsync((short)id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    Category = category;
+                }
+                return Page();
             }
-            return Page();
         }
     }
 }
