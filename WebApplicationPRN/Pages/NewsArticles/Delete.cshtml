@@ -54,6 +54,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NewsArticle.CreatedBy.AccountName)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NewsArticle.Tags)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var item in Model.NewsArticle.Tags)
+            {
+                @Html.DisplayFor(model => item.TagName) <br />
+            }
+        </dd>
     </dl>
 
     <form method="post">

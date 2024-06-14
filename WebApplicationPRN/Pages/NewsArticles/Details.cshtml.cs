@@ -18,29 +18,21 @@ namespace WebApplicationPRN.Pages.NewsArticles
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (HttpContext.Session.GetString("Email") == null)
+            if (id == null)
             {
-                return RedirectToPage("/Index");
+                return NotFound();
+            }
 
+            var newsarticle = await _newsArticleSvc.GetNewsArticleByIdAsync(id);
+            if (newsarticle == null)
+            {
+                return NotFound();
             }
             else
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var newsarticle = await _newsArticleSvc.GetNewsArticleByIdAsync(id);
-                if (newsarticle == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    NewsArticle = newsarticle;
-                }
-                return Page();
+                NewsArticle = newsarticle;
             }
+            return Page();
         }
     }
 }

@@ -31,7 +31,6 @@ namespace WebApplicationPRN.Pages.NewsArticles
                     return NotFound();
                 }
 
-                //var newsarticle = await _context.NewsArticles.FirstOrDefaultAsync(m => m.NewsArticleId == id);
                 var newsarticle = _newsArticleSvc.GetNewsArticleByIdAsync(id);
 
                 if (newsarticle == null)

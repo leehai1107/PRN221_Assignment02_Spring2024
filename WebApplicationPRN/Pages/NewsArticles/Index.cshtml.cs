@@ -20,7 +20,7 @@ namespace WebApplicationPRN.Pages.NewsArticles
             NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
             if (HttpContext.Session.GetString("Email") == null)
             {
-                Response.Redirect("/Login");
+                Response.Redirect("/Index");
             }
         }
     }

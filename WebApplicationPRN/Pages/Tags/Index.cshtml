@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Home Tags</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -23,20 +23,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Tag) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TagName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.TagId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.TagId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.TagId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Tag)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TagName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.TagId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.TagId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.TagId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

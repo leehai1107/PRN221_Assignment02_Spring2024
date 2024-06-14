@@ -1,0 +1,72 @@
+﻿@page
+@model LeChiHaiRazorPages.Pages.ReportModel
+@{
+}
+
+<div class="container justify-content-center">
+    <form method="post">
+        <div class="date-pickers">
+            <div>
+                <label asp-for="StartDate">Start Date</label>
+                <input type="date" asp-for="StartDate" class="form-control" placeholder="Select a date" />
+            </div>
+            <div>
+                <span>To</span>
+            </div>
+            <div>
+                <label asp-for="EndDate">End Date</label>
+                <input type="date" asp-for="EndDate" class="form-control" placeholder="Select a date" />
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-primary" type="submit">Export</button>
+            <button class="btn btn-danger" asp-page="/Index">Back</button>
+        </div>
+    </form>
+
+    @if (Model.NewsArticle != null && Model.NewsArticle.Count > 0)
+    {
+        <div class="pt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].NewsTitle)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].CreatedDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].NewsContent)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].NewsStatus)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].ModifiedDate)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].Category)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].CreatedBy)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsArticle[0].Tags)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.NewsArticle)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.NewsTitle)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NewsContent)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NewsStatus)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ModifiedDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedBy.AccountName)</td>
+                            <td>
+                                @foreach (var tag in item.Tags)
+                                {
+                                    @Html.DisplayFor(modelItem => tag.TagName) <br />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="pt-4">
+            <p>No data!</p>
+        </div>
+    }
+</div>

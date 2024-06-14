@@ -28,6 +28,8 @@ namespace WebApplicationPRN.Pages.NewsArticles
         [BindProperty]
         public int[] TagsIdSelected { get; set; }
 
+        private NewsArticle CurrentNewsArticle { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (HttpContext.Session.GetString("Email") == null)
@@ -43,6 +45,7 @@ namespace WebApplicationPRN.Pages.NewsArticles
                 }
 
                 var newsarticle = await _newsArticleSvc.GetNewsArticleByIdAsync(id);
+                CurrentNewsArticle = newsarticle;
 
                 if (newsarticle == null)
                 {
@@ -81,6 +84,8 @@ namespace WebApplicationPRN.Pages.NewsArticles
                     var tag = await _tagSvc.GetTagByIdAsync(tagId);
                     tags.Add(tag);
                 }
+
+                NewsArticle.CreatedDate = CurrentNewsArticle.CreatedDate;
 
                 NewsArticle.ModifiedDate = DateTime.Now;
 
