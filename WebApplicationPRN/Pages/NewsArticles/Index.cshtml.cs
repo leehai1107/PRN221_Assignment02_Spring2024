@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Interface;
 
@@ -13,15 +14,39 @@ namespace WebApplicationPRN.Pages.NewsArticles
             _newsArticleSvc = newsArticleSvc;
         }
 
+        [BindProperty]
+        public string SearchQuery { get; set; } = "";
+
         public IList<NewsArticle> NewsArticle { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
             if (HttpContext.Session.GetString("Email") == null)
             {
-                Response.Redirect("/Index");
+                return RedirectToPage("/Login");
             }
+
+            NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (HttpContext.Session.GetString("Email") == null)
+            {
+                return RedirectToPage("/Login");
+            }
+
+            if (string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                NewsArticle = await _newsArticleSvc.GetNewsArticlesAsync();
+            }
+            else
+            {
+                NewsArticle = await _newsArticleSvc.SearchNewsArticlesByTitleAsync(SearchQuery);
+            }
+
+            return Page();
         }
     }
 }

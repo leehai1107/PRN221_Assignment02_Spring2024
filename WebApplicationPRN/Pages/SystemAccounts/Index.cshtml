@@ -10,46 +10,44 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SystemAccount[0].AccountName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SystemAccount[0].AccountEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SystemAccount[0].AccountRole)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SystemAccount[0].AccountPassword)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.SystemAccount)
-        {
+<form method="post">
+    <div class="form-group">
+        <label for="searchQuery">Search:</label>
+        <input type="text" class="form-control" asp-for="SearchQuery" placeholder="Search for account name" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+@if (Model.SystemAccount != null && Model.SystemAccount.Count > 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountEmail)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountRole)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountPassword)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.AccountId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
-                </td>
+                <th>@Html.DisplayNameFor(model => model.SystemAccount[0].AccountName)</th>
+                <th>@Html.DisplayNameFor(model => model.SystemAccount[0].AccountEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.SystemAccount[0].AccountRole)</th>
+                <th>@Html.DisplayNameFor(model => model.SystemAccount[0].AccountPassword)</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SystemAccount)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.AccountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AccountEmail)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AccountRole)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AccountPassword)</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.AccountId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No system accounts found.</p>
+}

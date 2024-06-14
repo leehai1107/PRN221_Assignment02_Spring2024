@@ -10,34 +10,48 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].CategoryDesciption)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Category)
-        {
+<form method="post">
+    <div class="form-group">
+        <label for="searchQuery">Search:</label>
+        <input type="text" class="form-control" asp-for="SearchQuery" placeholder="Search for category name" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+@if (Model.Category != null && Model.Category.Count > 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryDesciption)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].CategoryDesciption)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Category)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryDesciption)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No categories found.</p>
+}
